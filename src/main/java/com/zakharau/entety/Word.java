@@ -48,7 +48,7 @@ public class Word {
   @Enumerated(EnumType.STRING)
   private Priority priority;
 
-  private int countRepeat;
+  private Integer countRepeat;
   @Builder.Default
   @ToString.Exclude
   @ManyToMany(fetch = FetchType.LAZY)

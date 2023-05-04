@@ -8,7 +8,6 @@ gradlew
 *.war
 */tmp/
 */war/
-build.gradle
 *build.gradle
 gradle.*
 gradlew.*

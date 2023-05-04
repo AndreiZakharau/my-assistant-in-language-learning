@@ -1,6 +1,6 @@
 package com.zakharau.service.impl;
 
-import com.zakharau.dto.WordDto;
+import com.zakharau.dto.word.ViewWordDto;
 import com.zakharau.service.WordService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,19 +10,19 @@ public class WordServiceImpl implements WordService {
 
   @Override
   @Transactional
-  public String add(WordDto wordDto) {
+  public String add(ViewWordDto wordDto) {
     return null;
   }
 
   @Override
   @Transactional
-  public String delete(WordDto wordDto) {
+  public String delete(ViewWordDto wordDto) {
     return null;
   }
 
   @Override
   @Transactional
-  public WordDto update(WordDto wordDto) {
+  public ViewWordDto update(ViewWordDto wordDto) {
     return null;
   }
 }

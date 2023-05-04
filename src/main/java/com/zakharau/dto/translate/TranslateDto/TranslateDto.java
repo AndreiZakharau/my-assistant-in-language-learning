@@ -1,6 +1,5 @@
-package com.zakharau.dto;
+package com.zakharau.dto.translate.TranslateDto;
 
-import com.zakharau.entety.Status;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,10 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class WordDto {
+public class TranslateDto {
 
-  private String word;
+  private Long id;
   private String translate;
-  private Status status;
-
 }
