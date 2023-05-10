@@ -1,7 +1,7 @@
 package com.zakharau.service;
 
-import com.zakharau.dto.word.ViewWordDto;
+import com.zakharau.dto.word.WordDto;
 
-public interface WordService extends EntityService<ViewWordDto>{
+public interface WordService extends EntityService<WordDto>{
 
 }

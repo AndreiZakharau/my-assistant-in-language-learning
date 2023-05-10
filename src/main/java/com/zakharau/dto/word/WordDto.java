@@ -3,7 +3,6 @@ package com.zakharau.dto.word;
 import com.zakharau.dto.topic.TopicDto.TopicDto;
 import com.zakharau.dto.translate.TranslateDto.TranslateDto;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

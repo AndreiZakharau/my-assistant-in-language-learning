@@ -13,6 +13,6 @@ import lombok.Setter;
 @Builder
 public class TranslateDto {
 
-  private Long id;
+  private long id;
   private String translate;
 }
