@@ -1,9 +1,12 @@
 package com.zakharau.service.impl;
 
 import com.zakharau.dto.word.WordDto;
+import com.zakharau.entety.Status;
+import com.zakharau.entety.Word;
 import com.zakharau.mapper.WordMapper;
 import com.zakharau.repository.WordRepo;
 import com.zakharau.service.WordService;
+import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,9 +20,16 @@ public class WordServiceImpl implements WordService {
 
   @Override
   @Transactional
-  public String add(WordDto wordDto) {
+  public WordDto add(WordDto wordDto) {
 
-    return "Word %s is added" + wordDto.getWord();
+    wordDto.setStatus(String.valueOf(Status.NEW));
+    wordDto.setCreateDate(LocalDate.now());
+    wordDto.setLastRepeatDate(LocalDate.now());
+    wordDto.setCountRepeat(0);
+    Word word = wordMapper.toWord(wordDto);
+    Word saveWord = wordRepo.save(word);
+
+    return wordMapper.toWordDto(saveWord);
   }
 
   @Override

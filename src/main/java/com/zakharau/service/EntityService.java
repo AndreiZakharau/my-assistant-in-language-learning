@@ -2,7 +2,7 @@ package com.zakharau.service;
 
 public interface EntityService<T> {
 
-  String add(T t);
+  T add(T t);
 
   String delete(T t);
 

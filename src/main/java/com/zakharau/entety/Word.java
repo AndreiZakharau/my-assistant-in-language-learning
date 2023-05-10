@@ -11,6 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -47,7 +48,8 @@ public class Word {
   @NotNull
   @Enumerated(EnumType.STRING)
   private Priority priority;
-
+  @NotNull
+  @Min(value = 0)
   private Integer countRepeat;
   @Builder.Default
   @ToString.Exclude

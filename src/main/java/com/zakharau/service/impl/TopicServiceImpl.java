@@ -12,7 +12,7 @@ public class TopicServiceImpl implements TopicService {
 
   @Override
   @Transactional
-  public String add(TopicDto topicDto) {
+  public TopicDto add(TopicDto topicDto) {
     return null;
   }
 

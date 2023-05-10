@@ -1,5 +1,9 @@
 package com.zakharau.dto.word;
 
+import com.zakharau.entety.Priority;
+import com.zakharau.entety.Topic;
+import com.zakharau.entety.Translate;
+import java.util.List;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +19,8 @@ import lombok.Setter;
 public class ViewWordDto {
 
   private String word;
-  private Set<String> liseTranslate;
-  private Set<String> listTopic;
+  private List<Translate> listTranslate;
+  private List<Topic> listTopic;
+  private Priority priority;
 
 }

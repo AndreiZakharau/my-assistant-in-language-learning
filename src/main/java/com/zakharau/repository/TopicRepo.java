@@ -1,6 +1,5 @@
 package com.zakharau.repository;
 
-import com.zakharau.dto.topic.TopicDto.TopicDto;
 import com.zakharau.entety.Topic;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

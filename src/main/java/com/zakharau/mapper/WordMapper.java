@@ -1,5 +1,6 @@
 package com.zakharau.mapper;
 
+import com.zakharau.dto.word.ViewWordDto;
 import com.zakharau.dto.word.WordDto;
 import com.zakharau.entety.Word;
 import org.mapstruct.InheritInverseConfiguration;
@@ -18,6 +19,22 @@ public interface WordMapper {
 
   @InheritInverseConfiguration
   Word toWord(WordDto wordDto);
+
+  @Mapping(target = "listTranslate", source = "translates")
+  @Mapping(target = "listTopic", source = "topics")
+  ViewWordDto toViewWordDto(Word word);
+
+  @InheritInverseConfiguration
+  Word wordFromViewWordDto(ViewWordDto viewWordDto);
+
+  @Mapping(target = "listTranslate", source = "translateList")
+  @Mapping(target = "listTopic", source = "topicList")
+  ViewWordDto viewWordDtoFromWordDto(WordDto wordDto);
+
+  @InheritInverseConfiguration
+  WordDto wordDtoFromViewWordDto(ViewWordDto viewWordDto);
+
+
 
 
 }
