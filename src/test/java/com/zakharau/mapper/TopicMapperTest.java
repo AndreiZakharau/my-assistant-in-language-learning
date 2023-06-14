@@ -7,20 +7,18 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.zakharau.dto.topic.TopicDto.TopicDto;
 import com.zakharau.entety.Topic;
-import com.zakharau.entety.Word;
-import java.util.Set;
+import com.zakharau.testobject.EntetyObject;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 class TopicMapperTest {
 
   @Test
   void createToTopicDtoFromTopic() {
 
-    Topic topic = Topic.builder()
-        .id(1L)
-        .topicName("all")
-        .words(Set.of(new Word()))
-        .build();
+    Topic topic = EntetyObject.getTopic();
 
     TopicDto dto = TOPIC_MAPPER.toTopicDto(topic);
 
@@ -32,10 +30,7 @@ class TopicMapperTest {
   @Test
   void createToTopicFromTopicDto() {
 
-    TopicDto dto = TopicDto.builder()
-        .id(1L)
-        .topic("all")
-        .build();
+    TopicDto dto = EntetyObject.getTopicDto();
 
     Topic topic = TOPIC_MAPPER.toTopic(dto);
 

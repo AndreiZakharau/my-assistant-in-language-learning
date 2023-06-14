@@ -18,7 +18,7 @@ public class TopicServiceImpl implements TopicService {
 
   @Override
   @Transactional
-  public String delete(TopicDto topicDto) {
+  public String delete(String topicName) {
     return null;
   }
 

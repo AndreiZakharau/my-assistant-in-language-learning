@@ -6,74 +6,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import com.zakharau.dto.topic.TopicDto.TopicDto;
-import com.zakharau.dto.translate.TranslateDto.TranslateDto;
 import com.zakharau.dto.word.ViewWordDto;
 import com.zakharau.dto.word.WordDto;
-import com.zakharau.entety.Priority;
-import com.zakharau.entety.Status;
-import com.zakharau.entety.Topic;
-import com.zakharau.entety.Translate;
 import com.zakharau.entety.Word;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Set;
+import com.zakharau.testobject.EntetyObject;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-
+@ExtendWith(MockitoExtension.class)
 class WordMapperTest {
 
-  private final Topic topic = Topic.builder()
-      .id(1L)
-      .topicName("all")
-      .words(Set.of(new Word()))
-      .build();
+  private final WordDto wordDto = EntetyObject.getWordDto();
 
-  private final Translate translate = Translate.builder()
-      .id(2L)
-      .translate("стоп")
-      .build();
+  private final Word word = EntetyObject.getWord();
 
-  private final TopicDto topicDto = TopicDto.builder()
-      .id(1L)
-      .topic("all")
-      .build();
-
-  private final TranslateDto translateDto = TranslateDto.builder()
-      .id(2L)
-      .translate("стоп")
-      .build();
-
-  private final WordDto wordDto = WordDto.builder()
-      .id(13L)
-      .word("stop")
-      .createDate(LocalDate.now().minusDays(1))
-      .lastRepeatDate(LocalDate.now())
-      .countRepeat(2)
-      .priority("NOT_STATUS")
-      .status("REPEAT")
-      .topicList(Set.of(topicDto))
-      .translateList(Set.of(translateDto))
-      .build();
-
-  private final Word word = Word.builder()
-      .id(13L)
-      .word("stop")
-      .createDate(LocalDate.now().minusDays(1))
-      .lastRepeatDate(LocalDate.now())
-      .countRepeat(2)
-      .priority(Priority.NOT_STATUS)
-      .status(Status.REPEAT)
-      .topics(Set.of(topic))
-      .translates(Set.of(translate))
-      .build();
-
-  private final ViewWordDto viewWordDto = ViewWordDto.builder()
-      .word("stop")
-      .priority(Priority.FIRST)
-      .listTopic(List.of(topic))
-      .listTranslate(List.of(translate))
-      .build();
+  private final ViewWordDto viewWordDto = EntetyObject.getViewWordDto();
 
   @Test
   void createToWordDtoFromWord() {
@@ -122,7 +70,6 @@ class WordMapperTest {
     assertEquals(newWord.getWord(), viewWordDto.getWord());
     assertEquals(newWord.getPriority(), viewWordDto.getPriority());
     assertEquals(newWord.getTopics().size(), viewWordDto.getListTopic().size());
-    ;
   }
 
   @Test
@@ -135,7 +82,6 @@ class WordMapperTest {
     assertEquals(viewDto.getListTopic().size(), wordDto.getTopicList().size());
     assertEquals(String.valueOf(viewDto.getPriority()), wordDto.getPriority());
     assertEquals(viewDto.getListTranslate().size(), wordDto.getTranslateList().size());
-
   }
 
   @Test

@@ -7,20 +7,18 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.zakharau.dto.translate.TranslateDto.TranslateDto;
 import com.zakharau.entety.Translate;
-import com.zakharau.entety.Word;
-import java.util.Set;
+import com.zakharau.testobject.EntetyObject;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 class TranslateMapperTest {
 
   @Test
   void createToTranslateDtoFromTranslate() {
 
-    Translate translate = Translate.builder()
-        .id(2L)
-        .translate("стоп")
-        .wordList(Set.of(new Word()))
-        .build();
+    Translate translate = EntetyObject.getTranslate();
 
     TranslateDto dto = TRANSLATE_MAPPER.toTranslateDto(translate);
 
@@ -32,10 +30,7 @@ class TranslateMapperTest {
   @Test
   void createToTranslateFromTranslateDto() {
 
-    TranslateDto translateDto = TranslateDto.builder()
-        .id(2L)
-        .translate("стоп")
-        .build();
+    TranslateDto translateDto = EntetyObject.getTranslateDto();
 
     Translate translate = TRANSLATE_MAPPER.toTranslate(translateDto);
 
