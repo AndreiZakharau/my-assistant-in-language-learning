@@ -1,14 +1,15 @@
 package com.zakharau.entety;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,8 +21,8 @@ import lombok.ToString;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@EqualsAndHashCode
+@ToString(exclude = "wordInfoList")
+@EqualsAndHashCode(of = "topicName")
 @Entity
 @Table(name = "topics")
 public class Topic {
@@ -30,8 +31,8 @@ public class Topic {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   @NotNull
+  @Column(length = 100, unique = true)
   private String topicName;
-  @ManyToMany(mappedBy = "topics", fetch = FetchType.EAGER)
-  private Set<Word> words;
-
+  @OneToMany(mappedBy = "topic")
+  List<WordInfo> wordInfoList = new ArrayList<>();
 }
