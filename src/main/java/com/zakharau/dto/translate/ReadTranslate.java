@@ -1,4 +1,4 @@
-package com.zakharau.dto.translate.TranslateDto;
+package com.zakharau.dto.translate;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,12 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class TranslateDto {
+public class ReadTranslate {
 
   private long id;
   private String translate;

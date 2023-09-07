@@ -1,18 +1,19 @@
 package com.zakharau.controller.word;
 
-import com.zakharau.dto.word.ViewWordDto;
+import com.zakharau.dto.word.CreateWord;
+import com.zakharau.dto.word.ReadWord;
+import com.zakharau.service.impl.WordServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class WordController implements WordApi {
 
-
+  private final WordServiceImpl wordService;
 
   @Override
-  public ResponseEntity<String> addWord(ViewWordDto viewDto) {
-    return null;
+  public ReadWord addWord(CreateWord createWord) {
+    return wordService.add(createWord);
   }
 }

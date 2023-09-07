@@ -1,4 +1,4 @@
-package com.zakharau.dto.topic.TopicDto;
+package com.zakharau.dto.topic;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,13 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Builder
 @Getter
 @Setter
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class TopicDto {
+@NoArgsConstructor
+public class ReadTopic {
 
   private long id;
-  private String topic;
+  private String topicName;
 }

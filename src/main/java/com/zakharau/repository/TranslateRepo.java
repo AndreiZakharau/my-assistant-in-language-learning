@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TranslateRepo extends JpaRepository<Translate, Long> {
 
+  Translate getTranslateByTranslate(String translate);
 }

@@ -1,13 +1,12 @@
 package com.zakharau.service.impl;
 
-import com.zakharau.dto.word.WordDto;
-import com.zakharau.entety.Status;
+import com.zakharau.dto.word.CreateWord;
+import com.zakharau.dto.word.ReadWord;
 import com.zakharau.entety.Word;
 import com.zakharau.mapper.WordMapper;
 import com.zakharau.repository.WordRepo;
 import com.zakharau.service.WordService;
 import jakarta.persistence.EntityNotFoundException;
-import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,15 +21,10 @@ public class WordServiceImpl implements WordService {
 
   @Override
   @Transactional
-  public WordDto add(WordDto wordDto) {
+  public ReadWord add(CreateWord createWord) {
 
-    wordDto.setStatus(String.valueOf(Status.NEW));
-    wordDto.setCreateDate(LocalDate.now());
-    wordDto.setLastRepeatDate(LocalDate.now());
-    wordDto.setCountRepeat(0);
-    Word word = wordMapper.toWord(wordDto);
 
-    return wordMapper.toWordDto(wordRepo.save(word));
+    return wordMapper.readWordFromWord(wordRepo.save(wordMapper.wordFromCreateWord(createWord)));
   }
 
   @Override
@@ -47,18 +41,24 @@ public class WordServiceImpl implements WordService {
 
   @Override
   @Transactional
-  public WordDto update(WordDto wordDto) {
+  public ReadWord update(ReadWord readWord) {
 
-    if (!getAllWordByWord(wordDto.getWord()).isEmpty()) {
-      Word word = wordRepo.saveAndFlush(wordMapper.toWord(wordDto));
-      return wordMapper.toWordDto(word);
+    if (!getAllWordByWord(readWord.getWord()).isEmpty()) {
+      Word word = wordRepo.saveAndFlush(wordMapper.wordFromReadWord(readWord));
+      return wordMapper.readWordFromWord(word);
     } else {
-      throw new EntityNotFoundException(String.format("Incorrect word: %s", wordDto.getWord()));
+      throw new EntityNotFoundException(String.format("Incorrect word: %s", readWord.getWord()));
     }
   }
 
   @Transactional
   public List<Word> getAllWordByWord(String word) {
     return wordRepo.findAllByWord(word);
+  }
+
+  @Override
+  @Transactional(readOnly = true)
+  public Word getWordByWord(String word) {
+    return wordRepo.getWordByWord(word);
   }
 }

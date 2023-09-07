@@ -10,5 +10,7 @@ public interface WordRepo extends JpaRepository<Word, Long> {
 
   List<Word> findAllByWord(String word);
 
+  Word getWordByWord(String word);
+
   void deleteWordByWord(String word);
 }

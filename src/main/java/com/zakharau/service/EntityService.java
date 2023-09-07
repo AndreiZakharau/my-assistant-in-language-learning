@@ -1,8 +1,8 @@
 package com.zakharau.service;
 
-public interface EntityService<T> {
+public interface EntityService<T, K> {
 
-  T add(T t);
+  T add(K k);
 
   String delete(String string);
 
