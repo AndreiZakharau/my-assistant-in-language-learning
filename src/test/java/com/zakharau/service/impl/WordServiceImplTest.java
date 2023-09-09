@@ -8,14 +8,13 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.zakharau.dto.word.WordDto;
-import com.zakharau.entety.Status;
+import com.zakharau.dto.word.CreateWord;
+import com.zakharau.dto.word.ReadWord;
 import com.zakharau.entety.Word;
 import com.zakharau.mapper.WordMapper;
 import com.zakharau.repository.WordRepo;
 import com.zakharau.testobject.EntetyObject;
 import jakarta.persistence.EntityNotFoundException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -35,20 +34,29 @@ class WordServiceImplTest {
   private WordMapper wordMapper;
 
 
-  private final WordDto wordDto = EntetyObject.getWordDto();
+  private final ReadWord readWord = EntetyObject.getReadWord();
+  private final CreateWord createWord = EntetyObject.getCreateWord();
   private final Word word = EntetyObject.getWord();
 
   @Test
   void addWord() {
 
     when(wordRepo.save(word)).thenReturn(word);
-    when(wordMapper.toWord(wordDto)).thenReturn(word);
-    when(wordMapper.toWordDto(word)).thenReturn(wordDto);
-    WordDto actual = wordService.add(wordDto);
+    when(wordMapper.readWordFromWord(word)).thenReturn(readWord);
+    when(wordMapper.wordFromCreateWord(createWord)).thenReturn(word);
+    ReadWord actual = wordService.add(createWord);
 
     assertEquals(actual.getWord(), word.getWord());
     assertEquals(actual.getId(), word.getId());
-    assertEquals(actual.getLastRepeatDate(), LocalDate.now());
+  }
+
+  @Test
+  void addWordTrowRuntimeExceptionWhenWordIsPresent() {
+
+    String message = String.format("This word %s is present", createWord.getWord());
+    when(wordRepo.getWordByWord(createWord.getWord())).thenReturn(word);
+
+    assertThrows(RuntimeException.class, () -> wordService.add(createWord), message);
   }
 
   @Test
@@ -96,19 +104,19 @@ class WordServiceImplTest {
 
     String entryWord = "stop";
     long id = 13L;
-    wordDto.setStatus("REPEAT");
-    Word updatedWord = Word.builder().id(id).word(entryWord).status(Status.REPEAT).build();
+    readWord.setWord("start");
+    Word updatedWord = Word.builder().id(id).word(readWord.getWord()).build();
 
-    when(wordRepo.findAllByWord(wordDto.getWord())).thenReturn(List.of(word));
-    when(wordMapper.toWord(wordDto)).thenReturn(updatedWord);
-    when(wordMapper.toWordDto(updatedWord)).thenReturn(wordDto);
+    when(wordRepo.findAllByWord(readWord.getWord())).thenReturn(List.of(word));
+    when(wordMapper.wordFromReadWord(readWord)).thenReturn(updatedWord);
+    when(wordMapper.readWordFromWord(updatedWord)).thenReturn(readWord);
     when(wordRepo.saveAndFlush(updatedWord)).thenReturn(updatedWord);
 
-    WordDto actual = wordService.update(wordDto);
+    ReadWord actual = wordService.update(readWord);
 
     assertNotNull(actual);
-    assertEquals(actual.getId(), wordDto.getId());
-    assertEquals(actual.getStatus(), String.valueOf(updatedWord.getStatus()));
+    assertEquals(actual.getId(), readWord.getId());
+    assertEquals(actual.getWord(), String.valueOf(updatedWord.getWord()));
   }
 
   @Test
@@ -122,7 +130,7 @@ class WordServiceImplTest {
 
     when(wordRepo.findAllByWord(entryWord)).thenReturn(list);
 
-    assertThrows(EntityNotFoundException.class, () -> wordService.update(wordDto), message);
+    assertThrows(EntityNotFoundException.class, () -> wordService.update(readWord), message);
 
     verify(wordRepo, times(1)).findAllByWord(entryWord);
     verify(wordRepo, times(0)).deleteWordByWord(entryWord);
@@ -144,7 +152,7 @@ class WordServiceImplTest {
     List<Word> actualList = wordService.getAllWordByWord(entryWord);
 
     assertNotNull(actualList);
-    assertNotEquals(actualList.size(), wordList);
+    assertNotEquals(actualList.size(), wordList.size());
     assertEquals(actualList.size(), 1);
   }
 }

@@ -23,8 +23,13 @@ public class WordServiceImpl implements WordService {
   @Transactional
   public ReadWord add(CreateWord createWord) {
 
+    if (getWordByWord(createWord.getWord()) != null) {
+      throw new RuntimeException(String.format("This word %s is present", createWord.getWord()));
+    } else {
+      Word word = wordRepo.save(wordMapper.wordFromCreateWord(createWord));
+      return wordMapper.readWordFromWord(word);
+    }
 
-    return wordMapper.readWordFromWord(wordRepo.save(wordMapper.wordFromCreateWord(createWord)));
   }
 
   @Override

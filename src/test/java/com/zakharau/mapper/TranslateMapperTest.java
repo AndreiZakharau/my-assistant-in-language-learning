@@ -2,10 +2,11 @@ package com.zakharau.mapper;
 
 import static com.zakharau.mapper.TranslateMapper.TRANSLATE_MAPPER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-import com.zakharau.dto.translate.TranslateDto.TranslateDto;
+import com.zakharau.dto.translate.CreateTranslate;
+import com.zakharau.dto.translate.ReadTranslate;
 import com.zakharau.entety.Translate;
 import com.zakharau.testobject.EntetyObject;
 import org.junit.jupiter.api.Test;
@@ -15,27 +16,35 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class TranslateMapperTest {
 
+  private final Translate translate = EntetyObject.getTranslate();
+  private final CreateTranslate createTranslate = EntetyObject.getCreateTranslate();
+  private final ReadTranslate readTranslate = EntetyObject.getReadTranslate();
+
   @Test
-  void createToTranslateDtoFromTranslate() {
+  void  translateFromCreateTranslate() {
 
-    Translate translate = EntetyObject.getTranslate();
+    Translate newTranslate = TRANSLATE_MAPPER.translateFromCreateTranslate(createTranslate);
 
-    TranslateDto dto = TRANSLATE_MAPPER.toTranslateDto(translate);
+    assertNotNull(newTranslate);
+    assertEquals(newTranslate.getTranslate(),createTranslate.getTranslate());
+    assertNull(newTranslate.getId());
+  }
+  @Test
+  void translateFromReadTranslate() {
+
+    Translate newTranslate = TRANSLATE_MAPPER.translateFromReadTranslate(readTranslate);
+
+    assertNotNull(newTranslate);
+    assertEquals(newTranslate.getTranslate(),readTranslate.getTranslate());
+    assertEquals(newTranslate.getId(),readTranslate.getId());
+  }
+  @Test
+  void readTranslateFromTranslate() {
+
+    ReadTranslate dto = TRANSLATE_MAPPER.readTranslateFromTranslate(translate);
 
     assertNotNull(dto);
-    assertNotEquals(dto.getTranslate(), "старт");
-    assertEquals(dto.getTranslate(), translate.getTranslate());
-  }
-
-  @Test
-  void createToTranslateFromTranslateDto() {
-
-    TranslateDto translateDto = EntetyObject.getTranslateDto();
-
-    Translate translate = TRANSLATE_MAPPER.toTranslate(translateDto);
-
-    assertNotNull(translate);
-    assertEquals(translate.getTranslate(), translateDto.getTranslate());
-    assertNotEquals(translate.getTranslate(), "старт");
+    assertEquals(dto.getTranslate(),translate.getTranslate());
+    assertEquals(dto.getId(),translate.getId());
   }
 }

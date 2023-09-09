@@ -20,5 +20,7 @@ public interface TranslateMapper {
   Translate translateFromCreateTranslate(CreateTranslate createTranslate);
   ReadTranslate readTranslateFromTranslate(Translate translate);
 
+  Translate translateFromReadTranslate(ReadTranslate readTranslate);
+
 //  ReadTranslate readTranslateFromTranslateDto(TranslateDto translateDto);
 }
