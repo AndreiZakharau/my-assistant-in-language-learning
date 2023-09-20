@@ -6,6 +6,7 @@ import com.zakharau.entety.Topic;
 import com.zakharau.mapper.TopicMapper;
 import com.zakharau.repository.TopicRepo;
 import com.zakharau.service.TopicService;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,11 +22,9 @@ public class TopicServiceImpl implements TopicService {
   @Transactional
   public ReadTopic add(CreateTopic createTopic) {
 
-    if (getTopicByTopicName(createTopic.getTopicName())==null) {
-      return mapper.readTopicFromTopic(repository.save(mapper.topicFromCreateTopic(createTopic)));
-    }else {
-      throw new RuntimeException("This topic is present."); //ToDo rename exception
-    }
+    Topic topicName = getTopicByTopicName(createTopic.getTopicName());
+    return mapper.readTopicFromTopic(Objects.requireNonNullElseGet(topicName,
+        () -> repository.save(mapper.topicFromCreateTopic(createTopic))));
   }
 
   @Override
@@ -44,7 +43,7 @@ public class TopicServiceImpl implements TopicService {
   @Transactional(readOnly = true)
   public Topic getTopicByTopicName(String topicName) {
 
-      return repository.getTopicByTopicName(topicName);
+    return repository.getTopicByTopicName(topicName);
   }
 
 }
